@@ -1,23 +1,16 @@
 import logging
 from db import get_connection
 from repository import (
-    create_users_table, 
-    insert_user, 
-    get_all_users, 
-    # insert_order, 
-    create_orders_table,
-    create_orders_user_index, 
-    get_total_spent_per_user, 
-    get_user_orders_summary, 
-    get_total_revenue, 
-    get_average_order_value, 
-    get_order_count_per_user, 
-    get_users_with_multiple_orders,
+    get_transit_departures_count, 
     create_raw_transit_table,
-    insert_raw_transit
+    insert_raw_transit,
+    create_transit_table,
+    truncate_transit_departures,
+    insert_transit_departure
     )
 from ingestion import fetch_mvg_data
-
+from transformation import transform_departures
+from datetime import datetime
 
 
 logging.basicConfig(level=logging.INFO)
@@ -27,20 +20,28 @@ def main():
     conn = get_connection()
     
     try:
-        create_users_table(conn)
-        create_orders_table(conn)
-        create_orders_user_index(conn)
-
-        insert_user(conn, "Gabriel")
-        # insert_order(conn, 999, 100)
-
-        insert_user(conn, "AfterFailure")
-
         data = fetch_mvg_data()
+        ingested_at = datetime.now()
 
         create_raw_transit_table(conn)
+        create_transit_table(conn)
+        # truncate_transit_departures(conn)
         insert_raw_transit(conn, data)
 
+        rows = transform_departures(data, ingested_at)
+
+        for row in rows:
+            insert_transit_departure(
+                conn,
+                row["line"],
+                row["destination"],
+                row["transport_type"],
+                row["planned_departure_time"],
+                row["delay_minutes"],
+                row["platform"],
+                row["ingested_at"]
+            )
+        
         conn.commit()
 
     except Exception as e:
@@ -48,19 +49,8 @@ def main():
         conn.rollback()
         
     finally:
-        users = get_all_users(conn)
-        logging.info("Users in database: %s", users)
-
-        totals = get_total_spent_per_user(conn)
-        logging.info("Total spent per user: %s", totals)
-
-        summary = get_user_orders_summary(conn)
-        logging.info("User order summary: %s", summary)
-
-        logging.info("Total revenue: %s", get_total_revenue(conn))
-        logging.info("Average order value: %s", get_average_order_value(conn))
-        logging.info("Orders per user: %s", get_order_count_per_user(conn))
-        logging.info("Users with multiple orders: %s", get_users_with_multiple_orders(conn))
+        count = get_transit_departures_count(conn)
+        logging.info("Transit departures row count: %s", count)
 
         conn.close()
 

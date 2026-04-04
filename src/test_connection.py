@@ -1,62 +1,58 @@
 import requests
-import json
 import logging
 
-# Set up simple logging to see what's happening
+# Basic logging configuration to display info and error messages with timestamps.
 logging.basicConfig(
-    level=logging.INFO
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-def test_mvg_connections():
+def test_mvg_connection():
     """
-    Day 6 Test: Pulling real-time departures from Munich Hauptbanhof (Central Station).
+    Day 6 Test: Pulling real-time departures from Munich Hauptbahnhof (Central Station).
     Verified using the 'Network Tab' discovery.
     """
-    # The found ID in the Network Tab of (Hauptbahnhof):
+    # Station ID for Munich Hauptbahnhof
     station_id = "de:09162:6"
 
-    # We use the exact V3 endpoint that we found on the browser
-    url = https://www.mvg.de/api/bgw-pt/v3/departures
+    # MVG departures API endpoint
+    url = "https://www.mvg.de/api/bgw-pt/v3/departures"
 
-    # This are the (parameters) that were discovered in the URL.
+    # Parameters for the API request.
     params = {
-        "globalId" : station_id
-        "limit" : 100
-        "transportTypes" : "UBAHN,TRAM,SBAHN,BUS,REGIONAL_BUS,BAHN"
+        "globalId": station_id,
+        "limit": 100,
+        "transportTypes": "UBAHN,TRAM,SBAHN,BUS,REGIONAL_BUS,BAHN"
     }
 
-    logging.info(f"Connecting to the Transit's Munich API V3 : {url}")
+    logging.info(f"Connecting to MVG API : {url}")
 
     try:
-        # requests.get combine the URL and parameters automatically
+        # Send request to the MVG API 
         response = requests.get(url, params=params, timeout=10)
+        response.raise_for_status() # This will raise an HTTPError for bad responses (4xx and 5xx)
 
-        if response.status_code == 200:
-            logging.info("SUCESS:¡Connected to MVG's modern V3 API!")
+        logging.info("Successfully connected to MVG's modern V3 API!")
 
-            data response.json()
+        data = response.json()
 
-            # The V3 API normally returns a list directly or a dictionary with a list inside
-            departures = data if isinstance(data, list) else data.get('departures', [])
+        # The V3 API normally returns a list directly or a dictionary with a list inside
+        departures = data if isinstance(data, list) else data.get('departures', [])
             
-            print(f"\n--- LIVE OUTINGS (Total found: {len(departures)}) ---")
-            for train in departures[:5]:
-                line = train.get('label', '??')
-                destination = train.get('destination','Unknown')
-                t_type = train.get('transportType', 'Unknown')
+        print(f"\n--- LIVE DEPARTURES (Total found: {len(departures)}) ---")
+        for train in departures[:5]:
+            line = train.get('label', '??')
+            destination = train.get('destination','Unknown')
+            t_type = train.get('transportType', 'Unknown')
 
-                print(f"[t_type] Line {line} To: {destination}")
-                separator = "-" * 50
-            print(separator)
+            print(f"[{t_type}] Line {line} -> {destination}")
+        print("-" * 50)
 
-            logging.info("Everything is working perfectly with the latest version of the API!")
 
-        else:
-                logging.error(f"❌ ERROR: Status Code {response.status_code}")
+        logging.info("Everything is working perfectly with the latest version of the API!")
 
-    except Exception as e:
-         logging.error(f"❌ ERROR: Could not connect. Details: {e}")
+    except requests.RequestException as e:
+         logging.error(f"Could not connect to MVG API: {e}")
 
 if __name__ == "__main__":
-    test_mvg_connetion()
+    test_mvg_connection()

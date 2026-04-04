@@ -29,12 +29,19 @@ def fetch_mvg_data():
 if __name__ == "__main__":
     data = fetch_mvg_data()
 
-    for item in data[:2]:
+    print("\n--- SAMPLE RECORDS ---")
+    for item in data[3:]:
         print(item)
+        print("-" * 80)
     
     all_keys = set()
 
     for item in data:
         all_keys.update(item.keys())
 
-    print(all_keys)
+    print("\n--- ALL KEYS FOUND ---")
+    for key in sorted(all_keys):
+        print(key)
+
+        
+          
