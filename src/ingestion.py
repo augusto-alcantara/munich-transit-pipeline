@@ -13,24 +13,31 @@ def fetch_mvg_data():
         "transportTypes": "UBAHN,TRAM,SBAHN,BUS"
     }
 
-    response = requests.get(url, params=params, timeout=10)
+    try:
+        response = requests.get(url, params=params, timeout=10)
 
-    if response.status_code !=200:
+        if response.status_code !=200:
+            logging.error("MVG API request failed with status_code: %s", response.status_code)
+            return []
+        
+        data = response.json()
+
+        departures = data if isinstance (data, list) else data.get("departures", [])
+
+        logging.info("Fetched %d departures from MVG API", len(departures))
+
+        return departures
+
+    except requests.RequestException as e:
+        logging.error("MVG API request failed due to network error: %s", e)
+
         return []
-    
-    data = response.json()
-
-    departures = data if isinstance (data, list) else data.get("departures", [])
-
-    logging.info(f"Fetched {len(departures)} records")
-
-    return departures
 
 if __name__ == "__main__":
     data = fetch_mvg_data()
 
     print("\n--- SAMPLE RECORDS ---")
-    for item in data[3:]:
+    for item in data[:3]:  # Print first 3 records
         print(item)
         print("-" * 80)
     

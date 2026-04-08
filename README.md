@@ -17,6 +17,9 @@ This project demonstrates a basic data engineering pipeline design, including in
 - Transforms raw records into a structured table (`transit_departures`)
 - Applies basic data quality rules (required vs nullable fields)
 - Preserves historical snapshots across runs using ingestion timestamps
+- Logs pipeline stages and failures for better observability
+- Aborts safely on suspicious empty ingestion results
+- Uses transactions and rollback to avoid partial writes on failure
 - Enables analytical queries on transit operations (counts, delays, distribution, snapshot comparison)
 
 ---
@@ -83,6 +86,30 @@ Each pipeline execution generates one ingestion timestamp (`ingested_at`) shared
 This allows the project to preserve **historical snapshots** over time instead of only storing the latest observed state.
 
 This reflects a more realistic batch-processing pattern where each run represents one observation moment.
+
+---
+
+## Reliability & Testing
+
+The pipeline now includes a first reliability layer focused on controlled failure behavior and observability.
+
+### Reliability improvements
+- clearer logging across pipeline stages
+- safer handling of API/network failures
+- safe abort behavior when ingestion returns an ambiguous empty result
+- transaction rollback on failure to prevent partial writes
+
+### Controlled failure validation
+The pipeline was manually tested under failure scenarios such as:
+- broken database connection
+- forced insert failure (`NOT NULL` constraint violation)
+
+These tests were used to verify that failures are visible, understandable, and do not leave the database in an inconsistent state.
+
+### Tests
+A first focused test layer was added for `transformation.py` using `pytest`, covering behaviors such as:
+- skipping rows missing required fields
+- handling invalid timestamps safely
 
 ---
 
@@ -226,7 +253,7 @@ This project is being built as part of a data engineering learning roadmap focus
 
 ## Status
 
-Actively under development, with focus on improving structure, reproducibility, data validation, and historical tracking.
+Actively under development, with current focus on reliability, observability, testing, and historical tracking.
 
 ---
 
@@ -235,5 +262,5 @@ Actively under development, with focus on improving structure, reproducibility, 
 
 - Add orchestration (Airflow or Dagster)
 - Deploy pipeline to cloud environment (AWS)
-- Introduce automated testing
+- Expand automated test coverage beyond transformation logic
 - Handle schema evolution if API changes

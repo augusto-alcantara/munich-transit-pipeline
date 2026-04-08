@@ -315,3 +315,24 @@ A project is not portfolio-ready until another person can understand what it doe
 
 **Insight**
 The pipeline is no longer only loading the current state — it is now starting to behave like a time-aware system that preserves historical observations.
+
+## 📅 2026-04-08 — Day 16 — Pipeline Reliability & Controlled Failure
+
+**What I completed**
+* Improved `ingestion.py` so API failures are logged more clearly and handled more safely
+* Improved `main.py` logging so the pipeline is easier to observe stage by stage
+* Treated empty ingestion results as suspicious and aborted the pipeline safely
+* Simulated failure cases:
+  - broken DB connection
+  - forced insert failure (`NOT NULL` violation)
+* Verified that failed runs trigger rollback and do not leave partial writes
+* Added first focused tests for `transformation.py` using controlled sample input:
+  - skip rows missing required fields
+  - handle invalid timestamps safely
+
+**Learning**
+* A pipeline should fail clearly and predictably, not just work when everything goes well
+* Tests are most useful when they isolate one behavior and do not depend unnecessarily on live external systems
+
+**Insight**
+A more serious pipeline is not defined by more tools, but by more predictable behavior and more controlled ways to verify it.
