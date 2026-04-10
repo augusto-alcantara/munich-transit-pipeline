@@ -7,7 +7,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-def test_mvg_connection():
+def check_mvg_connection():
     """
     Day 6 Test: Pulling real-time departures from Munich Hauptbahnhof (Central Station).
     Verified using the 'Network Tab' discovery.
@@ -55,4 +55,4 @@ def test_mvg_connection():
          logging.error(f"Could not connect to MVG API: {e}")
 
 if __name__ == "__main__":
-    test_mvg_connection()
+    check_mvg_connection()

@@ -22,6 +22,8 @@ Chronological record of backend and data engineering skills built during the 6-m
 - [2026-04-02 — Day 13 — Dockerizing Project 0](#-2026-04-02--day-13--dockerizing-project-0)
 - [2026-04-03 — Day 14 — Project Packaging & Explainability](#-2026-04-03--day-14--project-packaging--explainability)
 - [2026-04-04 — Day 15 — Historical Tracking Layer](#-2026-04-04--day-15--historical-tracking-layer)
+-[2026-04-08 — Day 16 — Pipeline Reliability & Controlled Failure](#-2026-04-08--day-16--pipeline-reliability--controlled-failure)
+-[2026-04-09 — Day 17 — Transformation Testing & Behavioral Validation](#-2026-04-09--day-17--transformation-testing--behavioral-validation)
 
 ---
 
@@ -316,6 +318,7 @@ A project is not portfolio-ready until another person can understand what it doe
 **Insight**
 The pipeline is no longer only loading the current state — it is now starting to behave like a time-aware system that preserves historical observations.
 
+
 ## 📅 2026-04-08 — Day 16 — Pipeline Reliability & Controlled Failure
 
 **What I completed**
@@ -336,3 +339,31 @@ The pipeline is no longer only loading the current state — it is now starting 
 
 **Insight**
 A more serious pipeline is not defined by more tools, but by more predictable behavior and more controlled ways to verify it.
+
+
+## 📅 2026-04-09 — Day 17 — Transformation Testing & Behavioral Validation
+
+**What I completed**
+* Expanded the test layer for `transformation.py` using `pytest`
+* Added tests covering both normal and edge-case behaviors:
+  - valid row transformation
+  - skipping rows missing required fields
+  - invalid timestamp handling (`NULL` fallback)
+  - invalid delay handling (`NULL` fallback)
+  - missing optional platform handling
+* Refined test structure for clarity and consistency (naming, organization, separation from non-test scripts)
+* Cleaned project structure by separating:
+  - automated tests (`tests/`)
+  - manual API check script (`check_connection.py`)
+
+**Learning**
+* Tests should validate **behavioral guarantees**, not just code execution
+* Good test cases come from:
+  - expected behavior (happy path)
+  - realistic failure cases (messy or invalid input)
+* Not everything should be tested — focus on cases that would matter if broken
+* Clear separation between test code and utility scripts improves project structure and readability
+
+**Insight**
+The pipeline is no longer only “working” — its transformation behavior is now explicitly defined and verifiable through tests, making it more trustworthy and easier to evolve.
+

@@ -7,6 +7,7 @@ A data engineering project that ingests real-time transit data from the Munich M
 ## Overview
 
 This project demonstrates a basic data engineering pipeline design, including ingestion, raw storage, transformation, and analytical modeling using PostgreSQL.
+The focus is not just moving data, but designing a small pipeline that is queryable, testable, and more reliable under imperfect real-world input.
 
 ---
 
@@ -91,7 +92,7 @@ This reflects a more realistic batch-processing pattern where each run represent
 
 ## Reliability & Testing
 
-The pipeline now includes a first reliability layer focused on controlled failure behavior and observability.
+The pipeline includes a first reliability layer focused on controlled failure behavior, data quality handling, and observability.
 
 ### Reliability improvements
 - clearer logging across pipeline stages
@@ -104,12 +105,22 @@ The pipeline was manually tested under failure scenarios such as:
 - broken database connection
 - forced insert failure (`NOT NULL` constraint violation)
 
-These tests were used to verify that failures are visible, understandable, and do not leave the database in an inconsistent state.
+These checks were used to verify that failures are visible, understandable, and do not leave the database in an inconsistent state.
 
-### Tests
-A first focused test layer was added for `transformation.py` using `pytest`, covering behaviors such as:
+### Automated tests
+A focused `pytest` test layer was added for `transformation.py`, covering key transformation and data-quality behaviors such as:
+
+- valid row transformation
 - skipping rows missing required fields
-- handling invalid timestamps safely
+- invalid timestamp handling
+- invalid delay fallback to `NULL`
+- missing optional platform handling
+
+Run tests with:
+
+```bash
+python -m pytest -v
+```
 
 ---
 
@@ -131,8 +142,11 @@ src/
 ├── ingestion.py
 ├── main.py
 ├── repository.py
-├── test_connection.py
+├── check_connection.py
 ├── transformation.py
+
+tests/
+├── test_transformation.py
 ```
 
 - **main.py** — orchestrates the pipeline execution  
@@ -140,8 +154,9 @@ src/
 - **transformation.py** — applies transformation and data quality logic  
 - **repository.py** — contains SQL queries and database operations  
 - **db.py** — manages database connections  
-- **test_connection.py** — simple script to test API connectivity
+- **check_connection.py** — simple script to manually verify API connectivity
 
+- **tests/test_transformation.py** — automated tests for transformation logic and data quality handling
 ---
 
 ## Database tables
@@ -226,6 +241,18 @@ The resulting dataset was validated using SQL queries to confirm:
 
 ```bash
 python src/main.py
+```
+
+### Run tests
+
+```bash
+python -m pytest -v
+```
+
+### Manually check API connectivity
+
+```bash
+python src/check_connection.py
 ```
 
 ---
