@@ -383,3 +383,29 @@ The pipeline is no longer only “working” — its transformation behavior is 
 
 ### Insight
 A dataset can be technically correct and complete, yet still misleading if it is not representative of reality.
+
+
+## 📅 2026-04-11 — Day 19 — Observability & SQL Analysis
+
+### What I did
+- Added logging to the pipeline to make failures visible (missing required fields, invalid timestamp, invalid delay)
+- Ran SQL queries to analyze the dataset:
+  - distribution of lines
+  - average delay
+  - delayed vs on-time classification
+  - missing vs valid delay values
+- Used SQL to better understand how `delay_minutes` behaves
+
+### What I learned
+- Not all missing data is a problem:
+  - required fields → skip row
+  - optional fields → allow NULL
+- Logging should focus on real issues to avoid noise
+- SQL is used to analyze and validate pipeline output
+- Aggregations must consider data quality (e.g., excluding NULL values)
+
+### Insight
+A data pipeline must decide what data is valid, what can be missing, and what should be discarded.  
+The key is distinguishing between:
+- data that breaks the system (remove + log)
+- data that is incomplete but usable (keep + handle)

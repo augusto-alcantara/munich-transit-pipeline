@@ -11,9 +11,10 @@ def transform_departures(data, ingested_at):
     for item in data:
         # Validate required fiels: line, destination
         if not item.get("label") or not item.get("destination"):
+            logging.warning("Skipping row: missing required fields (line or destination)")
             skipped_rows +=1
             continue # Skip this row if essential fields are missing
-
+            
         # Handle the planned departure time (convert from epoch or set to None)
         raw_time = item.get("plannedDepartureTime")
         if isinstance(raw_time, (int, float)):
@@ -22,9 +23,11 @@ def transform_departures(data, ingested_at):
             except Exception:
                 planned_departure_time = None
                 invalid_timestamp += 1
+                logging.warning("Invalid timestamp encountered, setting to None")
         else:
             planned_departure_time = None
             invalid_timestamp += 1
+            logging.warning("Missing or invalid planned departure time, setting to None")
 
         # Validate delay ( it should be an integer, otherwise None)
         try:
@@ -32,6 +35,7 @@ def transform_departures(data, ingested_at):
         except (ValueError, TypeError):
             delay_minutes = None
             missing_delay += 1
+            logging.warning("Missing or invalid delay, setting to None")
         
         # Handle platform (nullable field, allow None if missing)
         platform = item.get("platform", None)
