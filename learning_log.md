@@ -24,6 +24,7 @@ Chronological record of backend and data engineering skills built during the 6-m
 - [2026-04-04 — Day 15 — Historical Tracking Layer](#-2026-04-04--day-15--historical-tracking-layer)
 -[2026-04-08 — Day 16 — Pipeline Reliability & Controlled Failure](#-2026-04-08--day-16--pipeline-reliability--controlled-failure)
 -[2026-04-09 — Day 17 — Transformation Testing & Behavioral Validation](#-2026-04-09--day-17--transformation-testing--behavioral-validation)
+-[2026-04-10 — Day 18 — Snapshot Validation & Data Representativeness](#-2026-04-10--day-18--snapshot-validation--data-representativeness)
 
 ---
 
@@ -367,3 +368,18 @@ A more serious pipeline is not defined by more tools, but by more predictable be
 **Insight**
 The pipeline is no longer only “working” — its transformation behavior is now explicitly defined and verifiable through tests, making it more trustworthy and easier to evolve.
 
+
+## 📅 2026-04-10 — Day 18 — Snapshot Validation & Data Representativeness
+
+### Work Completed
+- Generated and validated historical snapshots using `ingested_at`
+- Compared snapshot counts across runs to verify pipeline consistency
+- Analyzed dataset distribution across snapshots
+
+### Key Learnings
+- Data correctness, completeness, and representativeness are different problems
+- Small ingestion windows can produce biased datasets
+- Validation must consider how data is collected over time, not just its structure
+
+### Insight
+A dataset can be technically correct and complete, yet still misleading if it is not representative of reality.
