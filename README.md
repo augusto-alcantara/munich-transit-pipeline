@@ -205,6 +205,30 @@ GROUP BY line;
 
 ---
 
+## Analytical Use Cases
+
+The structured dataset enables basic operational and analytical insights:
+
+### System reliability (KPI)
+- Percentage of delayed departures  
+→ measures overall system performance and reliability
+
+### High-delay detection
+- Identify departures with delay > 5 minutes  
+→ helps detect specific problematic events
+
+### Data quality monitoring
+- NULL vs NOT NULL delay analysis  
+→ evaluates completeness and reliability of the dataset
+
+### Time-based analysis
+- Average delay per hour of day  
+→ identifies patterns in delays (e.g. peak hours vs low traffic periods)
+
+These analyses demonstrate how the pipeline output can be used for monitoring, reporting, and operational decision-making.
+
+---
+
 ## Data Quality Rules
 
 The transformation layer enforces the following rules:
@@ -216,6 +240,8 @@ The transformation layer enforces the following rules:
 
 - `delay_minutes` and `platform` are nullable  
   → missing values are preserved as `NULL`
+
+- Invalid or missing values in required fields are logged and skipped, ensuring that data issues are visible rather than silently ignored
 
 ### Validation
 

@@ -25,6 +25,9 @@ Chronological record of backend and data engineering skills built during the 6-m
 -[2026-04-08 — Day 16 — Pipeline Reliability & Controlled Failure](#-2026-04-08--day-16--pipeline-reliability--controlled-failure)
 -[2026-04-09 — Day 17 — Transformation Testing & Behavioral Validation](#-2026-04-09--day-17--transformation-testing--behavioral-validation)
 -[2026-04-10 — Day 18 — Snapshot Validation & Data Representativeness](#-2026-04-10--day-18--snapshot-validation--data-representativeness)
+-[2026-04-11 — Day 19 — Observability & SQL Analysis](#-2026-04-11--day-19--observability--sql-analysis)
+-[2026-04-13 — Day 20 — Analytical Thinking & SQL Patterns](#-2026-04-13--day-20--analytical-thinking--sql-patterns)
+-[2026-04-14 — Day 21 — Pipeline Consistency & SQL Structuring](#-2026-04-14--day-21--pipeline-consistency--sql-structuring)
 
 ---
 
@@ -409,3 +412,54 @@ A data pipeline must decide what data is valid, what can be missing, and what sh
 The key is distinguishing between:
 - data that breaks the system (remove + log)
 - data that is incomplete but usable (keep + handle)
+
+
+## 📅 2026-04-13 — Day 20 — Analytical Thinking & SQL Patterns
+
+### What I did
+- Wrote analytical SQL queries on `transit_departures`:
+  - percentage of delayed departures (KPI)
+  - detection of high-delay events (>5 minutes)
+  - NULL vs NOT NULL analysis for `delay_minutes`
+  - average delay per hour of day
+- Practiced structuring queries step by step instead of writing them all at once
+- Focused on explaining queries in plain English (no SQL terms)
+
+### What I learned
+- SQL is not just querying data, but answering real system questions:
+  - “How reliable is the system?” (KPI)
+  - “Which events are problematic?” (event-level analysis)
+  - “Is the data trustworthy?” (data quality)
+  - “When do problems occur?” (time-based analysis)
+- `COUNT(*)` vs `COUNT(column)` is critical for understanding NULL behavior
+- `CASE WHEN` enables conditional counting and flexible metrics
+- Analytical queries require clear thinking before writing SQL
+
+### Insight
+The value of SQL is not in the syntax, but in the ability to translate real-world questions into clear, measurable queries.
+
+### Personal Note
+Explaining queries clearly is harder than writing them, but it exposes real understanding gaps.
+
+
+## 📅 2026-04-14 — Day 21 — Pipeline Consistency & SQL Structuring
+
+### What I did
+
+- Deep review of pipeline behavior  
+- Analyzed transactions (commit / rollback)  
+- Practiced explaining system design  
+- Learned and applied CTE in SQL  
+
+### What I learned
+
+- Pipelines should be atomic (all-or-nothing)  
+- `commit()` defines when data is actually saved  
+- `rollback()` prevents inconsistent states  
+- Raw and structured data must stay consistent  
+- There is a trade-off between consistency and availability  
+- CTE is used to structure multi-step queries, but is not always necessary  
+
+### Key insight
+
+- A working pipeline is not enough — understanding failure behavior and data consistency is what makes it reliable  
