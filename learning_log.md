@@ -28,6 +28,9 @@ Chronological record of backend and data engineering skills built during the 6-m
 -[2026-04-11 — Day 19 — Observability & SQL Analysis](#-2026-04-11--day-19--observability--sql-analysis)
 -[2026-04-13 — Day 20 — Analytical Thinking & SQL Patterns](#-2026-04-13--day-20--analytical-thinking--sql-patterns)
 -[2026-04-14 — Day 21 — Pipeline Consistency & SQL Structuring](#-2026-04-14--day-21--pipeline-consistency--sql-structuring)
+-[2026-04-15 - Day 22 — Insert Optimization (Scalability)](#-day-22--insert-optimization-scalability)
+-[2026-04-15 - Day 23 — Logging & Observability](#-day-23--logging--observability)
+
 
 ---
 
@@ -463,3 +466,84 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 ### Key insight
 
 - A working pipeline is not enough — understanding failure behavior and data consistency is what makes it reliable  
+
+
+## 📅 2026-04-15
+
+### 🧱 Day 22 — Insert Optimization (Scalability)
+
+#### What I did
+- Identified inefficiency in row-by-row inserts
+- Implemented batch insert using `executemany()`
+- Refactored `main.py` to remove per-row insert loop
+- Fixed structure and indentation issues
+
+#### What I learned (CORE)
+- Databases are slow per query → reduce number of queries
+- One connection ≠ one query
+- Batch operations improve scalability
+- Working code is not the same as efficient code
+
+#### Key insight
+> The bottleneck was not the database connection, but the number of queries executed.
+
+#### What is still weak
+- Logging was not structured or clear enough
+- No visibility into performance
+- Still small-scale dataset
+
+
+---
+
+### 🧱 Day 23 — Logging & Observability
+
+#### What I did
+- Added structured logging with stages (`[INGESTION]`, `[TRANSFORMATION]`, `[LOAD]`, `[DB]`)
+- Made logs consistent and more informative (e.g., number of rows inserted)
+- Added timing to transformation and load steps
+
+#### What I learned (CORE)
+- Logs are not just messages — they explain system behavior
+- Without timing, I cannot detect bottlenecks
+- Not everything needs timing — only parts that can scale
+- Good logs allow debugging without reading the code
+
+#### Key insight
+> A working pipeline is not enough — it must be observable and explainable through logs.
+
+#### What is still weak
+- The pipeline must be run manually; there is no scheduling yet
+- Failures are only visible through logs; there is no automatic alerting
+- Performance can be seen per run, but not tracked over time
+
+---
+
+## 📅 2026-04-17 / 2026-04-18 / 2026-04-19
+
+### 🧱 Day 24 — Airflow Integration & System Thinking
+
+#### What I did
+- Integrated existing pipeline into Apache Airflow
+- Created DAG with ingestion and transformation tasks
+- Refactored pipeline to run as independent tasks
+- Fixed data flow (moved from in-memory to database-based flow)
+- Implemented transaction handling (commit / rollback) inside tasks
+- Ensured idempotent behavior using UNIQUE constraint and ON CONFLICT
+- Debugged multiple issues (imports, task failures, data flow bugs)
+
+#### What I learned (CORE)
+- Airflow is an orchestration layer, not execution logic
+- Tasks are independent and do not share memory
+- Data must be persisted between tasks (database instead of variables)
+- A pipeline is a system of state changes, not just function calls
+- Transactions are critical to avoid partial writes
+- Idempotency ensures safe re-execution of the pipeline
+
+#### Key insight
+> The biggest shift was moving from passing variables in code to passing data through the database.
+
+#### What is still weak
+- No retry or alerting configuration in Airflow
+- No incremental processing (full batch each run)
+- Pipeline runs locally (not deployed)
+- Limited validation of transformed data beyond basic rules

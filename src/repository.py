@@ -32,7 +32,8 @@ def create_transit_table(conn):
                 planned_departure_time TIMESTAMP,
                 delay_minutes INTEGER,
                 platform TEXT,
-                ingested_at TIMESTAMP NOT NULL
+                ingested_at TIMESTAMP NOT NULL,
+                UNIQUE (line, destination, transport_type, planned_departure_time)
             );
         """)
 
@@ -59,7 +60,7 @@ def insert_transit_departure(
                 platform,
                 ingested_at    
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s)    
+            VALUES (%s, %s, %s, %s, %s, %s, %s)  
             """,
             (
                 line,
@@ -73,6 +74,40 @@ def insert_transit_departure(
         )
 
 
+def insert_transit_departures_batch(conn, rows):
+    with conn.cursor() as cursor:
+
+        data = [
+            (
+                row['line'],
+                row['destination'],
+                row['transport_type'],
+                row['planned_departure_time'],
+                row['delay_minutes'],
+                row['platform'],
+                row['ingested_at']
+            )
+            for row in rows
+        ]
+
+        query = """
+        INSERT INTO transit_departures (
+            line,
+            destination,
+            transport_type,
+            planned_departure_time,
+            delay_minutes,
+            platform,
+            ingested_at
+        ) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        ON CONFLICT (line, destination, transport_type, planned_departure_time)
+        DO NOTHING
+        """
+
+        cursor.executemany(query, data)
+
+
 def truncate_transit_departures(conn):
     with conn.cursor() as cursor:
         cursor.execute("TRUNCATE TABLE transit_departures;")
@@ -82,3 +117,10 @@ def get_transit_departures_count(conn):
     with conn.cursor() as cursor:
         cursor.execute("SELECT COUNT(*) FROM transit_departures;")
         return cursor.fetchone()[0]
+
+
+def get_raw_transit_data(conn):
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT raw_json FROM raw_transit_data ORDER BY id DESC LIMIT 1;")
+        result = cursor.fetchone()
+        return result[0] if result else []

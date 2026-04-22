@@ -11,6 +11,17 @@ The focus is not just moving data, but designing a small pipeline that is querya
 
 ---
 
+## Key Features
+
+- Orchestrated pipeline using Apache Airflow
+- Separation of ingestion and transformation tasks
+- Idempotent data loading using UNIQUE constraints and conflict handling
+- Transaction management with commit / rollback
+- Logging for observability and debugging
+- Raw + structured data modeling
+
+---
+
 ## What it does
 
 - Fetches real-time transit departure data from the MVG API
@@ -28,9 +39,33 @@ The focus is not just moving data, but designing a small pipeline that is querya
 ## Pipeline Architecture
 
 ```text
-MVG API → raw_transit_data (JSONB) → transformation.py → transit_departures
-```
+Scheduled and orchestrated by Airflow
+Airflow DAG
 
+ingestion_task:
+    MVG API → raw_transit_data (PostgreSQL)
+
+transformation_task:
+    raw_transit_data → transform → transit_departures
+```
+---
+
+## Architecture
+
+The pipeline is orchestrated using Apache Airflow and is divided into two main tasks:
+
+- **Ingestion task**
+  - Fetches data from the MVG API
+  - Stores raw JSON in the `raw_transit_data` table
+
+- **Transformation task**
+  - Reads raw data from PostgreSQL
+  - Applies transformation and data quality rules
+  - Writes structured data into `transit_departures`
+
+Each task is independent and communicates through the database, rather than sharing data in memory.
+
+---
 
 ## Engineering Decisions
 
@@ -131,6 +166,7 @@ python -m pytest -v
 - psycopg2
 - requests
 - DBeaver / psql for database inspection
+- Apache Airflow
 
 ---
 
@@ -310,10 +346,19 @@ Actively under development, with current focus on reliability, observability, te
 
 ---
 
+## Current Limitations
+
+- Runs on a local PostgreSQL instance (not deployed to cloud)
+- No retry or alerting configuration in Airflow yet
+- Processes data in batch without incremental optimization
+- No downstream consumption layer (e.g. dashboard or analytics service)
+
+---
+
 
 ## Future Improvements
 
-- Add orchestration (Airflow or Dagster)
+- Improve Airflow configuration (retries, scheduling, monitoring)
 - Deploy pipeline to cloud environment (AWS)
 - Expand automated test coverage beyond transformation logic
 - Handle schema evolution if API changes
