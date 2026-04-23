@@ -21,21 +21,30 @@ def main():
     logging.info("[PIPELINE] Pipeline started")
 
     conn = None
+
+    logging.info("[DB] Establishing database connection...")
     try:
-        logging.info("[DB] Establishing database connection...")
         conn = get_connection()
         logging.info("[DB] Database connection established")
+    except Exception as e:
+        logging.error("[DB] Connection failed: %s", e)
+        return
 
+    try:
         logging.info("[INGESTION] Fetching data from MVG API...")
         data = fetch_mvg_data()
-        logging.info("[INGESTION] Fetched %d raw records", len(data))
-        ingested_at = datetime.now()
-
-        if not data:
-            logging.warning(
-                "No data returned from ingestion. Aborting pipeline safely."
-            )
+        
+        if data is None:
+            logging.error("[INGESTION] API failure detected. Aborting pipeline.")
             return
+        
+        if not data:
+            logging.warning("[INGESTION] No data returned from API. Pipeline will stop (no rows to process).")
+            return
+        
+        logging.info("[INGESTION] Fetched %d raw records", len(data))
+
+        ingested_at = datetime.now()
 
         logging.info("[DB] Preparing database tables...")
         create_raw_transit_table(conn)
@@ -53,10 +62,10 @@ def main():
 
         valid_ratio = len(rows) / len(data) 
 
-        logging.info(f"[QUALITY] Valid rows ratio: {valid_ratio:.2f}")
+        logging.info("[QUALITY] Valid rows ratio: %.2f", valid_ratio)
 
         if valid_ratio < 0.5:
-            logging.warning("[QUALITY] Low valid data ratio detected")
+            logging.warning("[QUALITY] Low valid data ratio detected (%.2f). Data may be unreliable.", valid_ratio)
 
         end = time.time()
         logging.info("[TRANSFORMATION] Transformed %d rows in %.2f seconds", len(rows), end - start)
@@ -74,16 +83,19 @@ def main():
         logging.info("[DB] Transaction committed successfully.")
 
     except Exception:
-        logging.exception("[PIPELINE] Execution failed")
+        logging.exception(
+            "[PIPELINE] Unexpected failure during execution. "
+            "Rolling back transaction"
+        )
         if conn:
             conn.rollback()
-            logging.info("[DB] Transaction rolled back successfully.")
+            logging.info("[DB] Transaction rolled back due to failure.")
 
     finally:
         try:
             if conn:    
                 count = get_transit_departures_count(conn)
-                logging.info("[DB] Total rows in transit_departures: %s", count)
+                logging.info("[DB] Pipeline completed. Total rows in transit_departures: %s", count)
         except Exception:
             logging.exception("[DB] Failed to retrieve transit departures count")
 

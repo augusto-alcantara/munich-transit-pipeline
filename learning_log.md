@@ -2,39 +2,45 @@
 # Data Engineering Learning Log
 
 Chronological record of backend and data engineering skills built during the 6-month Pre-0 phase.
+Iterations represent learning cycles and system improvements, not calendar days.
 
 ---
 
 ## Timeline
 
-- [2026-03-01 — Day 1 — Backend Foundations](#-2026-03-01--day-1--backend-foundations)
-- [2026-03-02 — Day 2 — SQL Queries & Repository Architecture](#-2026-03-02--day-2--sql-queries--repository-architecture)
-- [2026-03-03 — Day 3 — Transactions, Integrity & Backend Robustness](#-2026--03-03--day-3--transactions-integrity--backend-robustness)
-- [2026-03-04 — Day 4 — Analytical SQL & Data Querying](#-2026-03-04--day-4--analytical-sql--data-querying)
-- [2026-03-05 — Day 5 — SQL Transformation](#-2026-03-05--day-5--sql-transformation)
-- [2026-03-06 - Day 6 — API Ingestion & First Pipeline](#-2026-03-06---day-6--api-ingestion--first-pipeline)
-- [2026-03-21 - Day 7 — JSON Querying](#-2026-03-21---day-7--json-querying)
-- [2026-03-22 - Day 8 — JSON Expansion](#-2026-03-22---day-8--json-expansion)
-- [2026-03-25 — Day 9 — First JSON Transformation](#-2026-03-25--day-9--first-json-transformation)
-- [2026-03-26 — Day 10 — Data Model Refinement & First Transit Analytics](#-2026-03-26--day-10--data-model-refinement--first-transit-analytics)
-- [2026-03-28 - Day 11 — Pipeline Cleanup & Modular Transformation](#-2026-03-28---day-11--pipeline-cleanup--modular-transformation)
-- [2026-04-01 — Day 12 — Data Quality & Analytical Validation](#-2026-04-01--day-12--data-quality--analytical-validation)
-- [2026-04-02 — Day 13 — Dockerizing Project 0](#-2026-04-02--day-13--dockerizing-project-0)
-- [2026-04-03 — Day 14 — Project Packaging & Explainability](#-2026-04-03--day-14--project-packaging--explainability)
-- [2026-04-04 — Day 15 — Historical Tracking Layer](#-2026-04-04--day-15--historical-tracking-layer)
--[2026-04-08 — Day 16 — Pipeline Reliability & Controlled Failure](#-2026-04-08--day-16--pipeline-reliability--controlled-failure)
--[2026-04-09 — Day 17 — Transformation Testing & Behavioral Validation](#-2026-04-09--day-17--transformation-testing--behavioral-validation)
--[2026-04-10 — Day 18 — Snapshot Validation & Data Representativeness](#-2026-04-10--day-18--snapshot-validation--data-representativeness)
--[2026-04-11 — Day 19 — Observability & SQL Analysis](#-2026-04-11--day-19--observability--sql-analysis)
--[2026-04-13 — Day 20 — Analytical Thinking & SQL Patterns](#-2026-04-13--day-20--analytical-thinking--sql-patterns)
--[2026-04-14 — Day 21 — Pipeline Consistency & SQL Structuring](#-2026-04-14--day-21--pipeline-consistency--sql-structuring)
--[2026-04-15 - Day 22 — Insert Optimization (Scalability)](#-day-22--insert-optimization-scalability)
--[2026-04-15 - Day 23 — Logging & Observability](#-day-23--logging--observability)
-
+- [2026-03-01 — Iteration 1 — Backend Foundations](#iteration-1--backend-foundations)
+- [2026-03-02 — Iteration 2 — SQL Queries & Repository Architecture](#iteration-2--sql-queries--repository-architecture)
+- [2026-03-03 — Iteration 3 — Transactions, Integrity & Backend Robustness](#iteration-3--transactions-integrity--backend-robustness)
+- [2026-03-04 — Iteration 4 — Analytical SQL & Data Querying](#iteration-4--analytical-sql--data-querying)
+- [2026-03-05 — Iteration 5 — SQL Transformation](#iteration-5--sql-transformation)
+- [2026-03-06 — Iteration 6 — API Ingestion & First Pipeline](#iteration-6--api-ingestion--first-pipeline)
+- [2026-03-21 — Iteration 7 — JSON Querying](#iteration-7--json-querying)
+- [2026-03-22 — Iteration 8 — JSON Expansion](#iteration-8--json-expansion)
+- [2026-03-25 — Iteration 9 — First JSON Transformation](#iteration-9--first-json-transformation)
+- [2026-03-26 — Iteration 10 — Data Model Refinement & First Transit Analytics](#iteration-10--data-model-refinement--first-transit-analytics)
+- [2026-03-28 — Iteration 11 — Pipeline Cleanup & Modular Transformation](#iteration-11--pipeline-cleanup--modular-transformation)
+- [2026-04-01 — Iteration 12 — Data Quality & Analytical Validation](#iteration-12--data-quality--analytical-validation)
+- [2026-04-02 — Iteration 13 — Dockerizing Project 0](#iteration-13--dockerizing-project-0)
+- [2026-04-03 — Iteration 14 — Project Packaging & Explainability](#iteration-14--project-packaging--explainability)
+- [2026-04-04 — Iteration 15 — Historical Tracking Layer](#iteration-15--historical-tracking-layer)
+- [2026-04-08 — Iteration 16 — Pipeline Reliability & Controlled Failure](#iteration-16--pipeline-reliability--controlled-failure)
+- [2026-04-09 — Iteration 17 — Transformation Testing & Behavioral Validation](#iteration-17--transformation-testing--behavioral-validation)
+- [2026-04-10 — Iteration 18 — Snapshot Validation & Data Representativeness](#iteration-18--snapshot-validation--data-representativeness)
+- [2026-04-11 — Iteration 19 — Observability & SQL Analysis](#iteration-19--observability--sql-analysis)
+- [2026-04-13 — Iteration 20 — Analytical Thinking & SQL Patterns](#iteration-20--analytical-thinking--sql-patterns)
+- [2026-04-14 — Iteration 21 — Pipeline Consistency & SQL Structuring](#iteration-21--pipeline-consistency--sql-structuring)
+- [2026-04-15 — Iteration 22 — Insert Optimization (Scalability)](#iteration-22--insert-optimization-scalability)
+- [2026-04-15 — Iteration 23 — Logging & Observability](#iteration-23--logging--observability)
+- [2026-04-17/19 — Iteration 24 — Airflow Integration & System Thinking](#iteration-24--airflow-integration--system-thinking)
+- [2026-04-20/21 — Iteration 25 — Data Exploration & SQL Understanding](#iteration-25--data-exploration--sql-understanding)
+- [2026-04-20/21 — Iteration 26 — Retries & Failure Types](#iteration-26--retries--failure-types)
+- [2026-04-20/21 — Iteration 27 — Failure Observation & System Behavior](#iteration-27--failure-observation--system-behavior)
+- [2026-04-20/21 — Iteration 28 — Failure Handling & Logging](#iteration-28--failure-handling--logging)
 
 ---
 
-## 📅 2026-03-01 - Day 1 — Backend Foundations
+## Iteration 1 — Backend Foundations
+📅 2026-03-01
 
 **What I completed**
 * Set up local backend environment connecting Python to PostgreSQL.
@@ -47,7 +53,10 @@ Chronological record of backend and data engineering skills built during the 6-m
 **Insight:** backend applications interact with databases through drivers and TCP connections.
 
 
-## 📅 2026-03-02 — Day 2 — SQL Queries & Repository Architecture
+---
+
+## Iteration 2 — SQL Queries & Repository Architecture
+📅 2026-03-02
 
 **What I completed**
 * Practiced core SQL query patterns: `INNER JOIN`, `LEFT JOIN`, `GROUP BY`, `HAVING`, `ORDER BY`, `LIMIT`, `COALESCE`.
@@ -63,7 +72,10 @@ Chronological record of backend and data engineering skills built during the 6-m
 **Insight:** backend systems remain manageable when responsibilities are separated into clear layers (connection, queries, orchestration).
 
 
-## 📅 2026-03-03 — Day 3 — Transactions, Integrity & Backend Robustness
+---
+
+## Iteration 3 — Transactions, Integrity & Backend Robustness
+📅 2026-03-03
 
 **What I completed**
 * Extended data model by adding `orders` table with foreign key to `users` (`ON DELETE CASCADE`) to enforce relational integrity.
@@ -78,7 +90,10 @@ Chronological record of backend and data engineering skills built during the 6-m
 **Insight:** reliable backend systems depend on controlled transactions — operations must succeed together or be rolled back to maintain database consistency.
 
 
-## 📅 2026-03-04 — Day 4 — Analytical SQL & Data Querying
+---
+
+## Iteration 4 — Analytical SQL & Data Querying
+📅 2026-03-04
 
 **What I completed**
 * Practiced SQL filtering (`WHERE`) and aggregation (`SUM`, `COUNT`, `GROUP BY`).
@@ -90,7 +105,10 @@ Chronological record of backend and data engineering skills built during the 6-m
 **Insight:** SQL transforms relational data into business metrics through aggregation and joins.
 
 
-## 📅 2026-03-05 — Day 5 — SQL Transformation
+---
+
+## Iteration 5 — SQL Transformation
+📅 2026-03-05
 
 **What I completed**
 * Explored dataset structure using `COUNT` and `GROUP BY`.
@@ -104,7 +122,10 @@ Chronological record of backend and data engineering skills built during the 6-m
 **Insight:** SQL transforms datasets into aggregated insights that answer business questions.
 
 
-## 📅 2026-03-06 - Day 6 — API Ingestion & First Pipeline
+---
+
+## Iteration 6 — API Ingestion & First Pipeline
+📅 2026-03-06
 
 **What I completed**
 * Connected to MVG API using `requests.get()` with parameters and timeout
@@ -123,7 +144,10 @@ Chronological record of backend and data engineering skills built during the 6-m
 Real data engineering starts by capturing raw reality before applying structure.
 
 
-## 📅 2026-03-21 - Day 7 — JSON Querying
+---
+
+## Iteration 7 — JSON Querying
+📅 2026-03-21
 
 **What I completed**
 * Explored JSON structure in PostgreSQL (list of objects)
@@ -138,7 +162,10 @@ Real data engineering starts by capturing raw reality before applying structure.
 I am only accessing one element (index 0), so I am sampling, not processing the dataset.
 
 
-## 📅 2026-03-22 - Day 8 — JSON Expansion
+---
+
+## Iteration 8 — JSON Expansion
+📅 2026-03-22
 
 **What I completed**
 * Expanded JSON arrays using `jsonb_array_elements()`
@@ -157,7 +184,10 @@ I am only accessing one element (index 0), so I am sampling, not processing the 
 I moved from sampling a single element to processing the full dataset by expanding JSON into rows.
 
 
-## 📅 2026-03-25 — Day 9 — First JSON Transformation
+---
+
+## Iteration 9 — First JSON Transformation
+📅 2026-03-25
 
 **What I completed**
 * Designed first structured table from raw transit API data
@@ -185,7 +215,10 @@ I moved from sampling a single element to processing the full dataset by expandi
 * Stored data is not the same as modeled data
 
 
-## 📅 2026-03-26 — Day 10 — Data Model Refinement & First Transit Analytics
+---
+
+## Iteration 10 — Data Model Refinement & First Transit Analytics
+📅 2026-03-26
 
 **What I completed**
 * Inspected the MVG API response and identified additional operational fields useful for analysis.
@@ -206,7 +239,10 @@ I moved from sampling a single element to processing the full dataset by expandi
 The project is starting to move from raw ingestion toward analytical data modeling.
 
 
-## 📅 2026-03-28 - Day 11 — Pipeline Cleanup & Modular Transformation
+---
+
+## Iteration 11 — Pipeline Cleanup & Modular Transformation
+📅 2026-03-28
 
 **What I completed**
 * Created a new `transformation.py` module and moved transformation logic out of `main.py`
@@ -228,7 +264,10 @@ The project is starting to move from raw ingestion toward analytical data modeli
 A working pipeline is not enough — clean structure and correct data types matter just as much.
 
 
-## 📅 2026-04-01 — Day 12 — Data Quality & Analytical Validation
+---
+
+## Iteration 12 — Data Quality & Analytical Validation
+📅 2026-04-01
 
 **What I completed**
 * Improved `transformation.py` to handle real-world data more safely:
@@ -261,7 +300,10 @@ A working pipeline is not enough — clean structure and correct data types matt
 A working pipeline is not necessarily a trustworthy pipeline — data quality and validation are part of the engineering work
 
 
-## 📅 2026-04-02 — Day 13 — Dockerizing Project 0
+---
+
+## Iteration 13 — Dockerizing Project 0
+📅 2026-04-02
 
 **What I completed**
 * Added a reproducibility layer to Project 0 by containerizing the pipeline with Docker
@@ -280,7 +322,10 @@ A working pipeline is not necessarily a trustworthy pipeline — data quality an
 The project now carries not only its logic, but also the environment required to run it more reliably outside the original machine setup.
 
 
-## 📅 2026-04-03 — Day 14 — Project Packaging & Explainability
+---
+
+## Iteration 14 — Project Packaging & Explainability
+📅 2026-04-03
 
 **What I completed**
 * Rewrote the project README to make the pipeline clear, structured, and portfolio-ready
@@ -305,7 +350,10 @@ The project now carries not only its logic, but also the environment required to
 A project is not portfolio-ready until another person can understand what it does, how it works, and why it was designed that way.
 
 
-## 📅 2026-04-04 — Day 15 — Historical Tracking Layer
+---
+
+## Iteration 15 — Historical Tracking Layer
+📅 2026-04-04
 
 **What I completed**
 * Added historical tracking to the structured `transit_departures` table by introducing a new required field: `ingested_at`
@@ -326,7 +374,10 @@ A project is not portfolio-ready until another person can understand what it doe
 The pipeline is no longer only loading the current state — it is now starting to behave like a time-aware system that preserves historical observations.
 
 
-## 📅 2026-04-08 — Day 16 — Pipeline Reliability & Controlled Failure
+---
+
+## Iteration 16 — Pipeline Reliability & Controlled Failure
+📅 2026-04-08
 
 **What I completed**
 * Improved `ingestion.py` so API failures are logged more clearly and handled more safely
@@ -348,7 +399,10 @@ The pipeline is no longer only loading the current state — it is now starting 
 A more serious pipeline is not defined by more tools, but by more predictable behavior and more controlled ways to verify it.
 
 
-## 📅 2026-04-09 — Day 17 — Transformation Testing & Behavioral Validation
+---
+
+## Iteration 17 — Transformation Testing & Behavioral Validation
+📅 2026-04-09
 
 **What I completed**
 * Expanded the test layer for `transformation.py` using `pytest`
@@ -375,7 +429,10 @@ A more serious pipeline is not defined by more tools, but by more predictable be
 The pipeline is no longer only “working” — its transformation behavior is now explicitly defined and verifiable through tests, making it more trustworthy and easier to evolve.
 
 
-## 📅 2026-04-10 — Day 18 — Snapshot Validation & Data Representativeness
+---
+
+## Iteration 18 — Snapshot Validation & Data Representativeness
+📅 2026-04-10
 
 ### Work Completed
 - Generated and validated historical snapshots using `ingested_at`
@@ -391,7 +448,10 @@ The pipeline is no longer only “working” — its transformation behavior is 
 A dataset can be technically correct and complete, yet still misleading if it is not representative of reality.
 
 
-## 📅 2026-04-11 — Day 19 — Observability & SQL Analysis
+---
+
+## Iteration 19 — Observability & SQL Analysis
+📅 2026-04-11
 
 ### What I did
 - Added logging to the pipeline to make failures visible (missing required fields, invalid timestamp, invalid delay)
@@ -417,7 +477,10 @@ The key is distinguishing between:
 - data that is incomplete but usable (keep + handle)
 
 
-## 📅 2026-04-13 — Day 20 — Analytical Thinking & SQL Patterns
+---
+
+## Iteration 20 — Analytical Thinking & SQL Patterns
+📅 2026-04-13
 
 ### What I did
 - Wrote analytical SQL queries on `transit_departures`:
@@ -445,7 +508,10 @@ The value of SQL is not in the syntax, but in the ability to translate real-worl
 Explaining queries clearly is harder than writing them, but it exposes real understanding gaps.
 
 
-## 📅 2026-04-14 — Day 21 — Pipeline Consistency & SQL Structuring
+---
+
+## Iteration 21 — Pipeline Consistency & SQL Structuring
+📅 2026-04-14
 
 ### What I did
 
@@ -468,26 +534,27 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 - A working pipeline is not enough — understanding failure behavior and data consistency is what makes it reliable  
 
 
+---
+
+## 🧱 Iteration 22 — Insert Optimization (Scalability)
 ## 📅 2026-04-15
 
-### 🧱 Day 22 — Insert Optimization (Scalability)
-
-#### What I did
+### What I did
 - Identified inefficiency in row-by-row inserts
 - Implemented batch insert using `executemany()`
 - Refactored `main.py` to remove per-row insert loop
 - Fixed structure and indentation issues
 
-#### What I learned (CORE)
+### What I learned (CORE)
 - Databases are slow per query → reduce number of queries
 - One connection ≠ one query
 - Batch operations improve scalability
 - Working code is not the same as efficient code
 
-#### Key insight
+### Key insight
 > The bottleneck was not the database connection, but the number of queries executed.
 
-#### What is still weak
+### What is still weak
 - Logging was not structured or clear enough
 - No visibility into performance
 - Still small-scale dataset
@@ -495,34 +562,35 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 
 ---
 
-### 🧱 Day 23 — Logging & Observability
+## 🧱 Iteration 23 — Logging & Observability
+## 📅 2026-04-15
 
-#### What I did
+### What I did
 - Added structured logging with stages (`[INGESTION]`, `[TRANSFORMATION]`, `[LOAD]`, `[DB]`)
 - Made logs consistent and more informative (e.g., number of rows inserted)
 - Added timing to transformation and load steps
 
-#### What I learned (CORE)
+### What I learned (CORE)
 - Logs are not just messages — they explain system behavior
 - Without timing, I cannot detect bottlenecks
 - Not everything needs timing — only parts that can scale
 - Good logs allow debugging without reading the code
 
-#### Key insight
+### Key insight
 > A working pipeline is not enough — it must be observable and explainable through logs.
 
-#### What is still weak
+### What is still weak
 - The pipeline must be run manually; there is no scheduling yet
 - Failures are only visible through logs; there is no automatic alerting
 - Performance can be seen per run, but not tracked over time
 
+
 ---
 
+## 🧱 Iteration 24 — Airflow Integration & System Thinking
 ## 📅 2026-04-17 / 2026-04-18 / 2026-04-19
 
-### 🧱 Day 24 — Airflow Integration & System Thinking
-
-#### What I did
+### What I did
 - Integrated existing pipeline into Apache Airflow
 - Created DAG with ingestion and transformation tasks
 - Refactored pipeline to run as independent tasks
@@ -531,7 +599,7 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 - Ensured idempotent behavior using UNIQUE constraint and ON CONFLICT
 - Debugged multiple issues (imports, task failures, data flow bugs)
 
-#### What I learned (CORE)
+### What I learned (CORE)
 - Airflow is an orchestration layer, not execution logic
 - Tasks are independent and do not share memory
 - Data must be persisted between tasks (database instead of variables)
@@ -539,11 +607,112 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 - Transactions are critical to avoid partial writes
 - Idempotency ensures safe re-execution of the pipeline
 
-#### Key insight
+### Key insight
 > The biggest shift was moving from passing variables in code to passing data through the database.
 
-#### What is still weak
+### What is still weak
 - No retry or alerting configuration in Airflow
 - No incremental processing (full batch each run)
 - Pipeline runs locally (not deployed)
 - Limited validation of transformed data beyond basic rules
+
+
+---
+
+### 🧱 Iteration 25 — Data Exploration & SQL Understanding
+
+#### What I did
+- Ran pipeline and verified execution  
+- Explored dataset using SQL (`COUNT`, `AVG`, `GROUP BY`)  
+- Analyzed data distribution (lines, delays, snapshots)  
+- Added `valid_ratio` metric to transformation  
+
+#### What I learned (CORE)
+- SQL aggregation (`GROUP BY`, `COUNT`, `AVG`) is essential to understand datasets  
+- Data from pipelines is often incomplete and biased (sampling)  
+- Not all raw data is usable → transformation filters invalid rows  
+- `AVG()` ignores `NULL` values → results can be misleading  
+- Each pipeline run represents a snapshot, not full reality  
+
+#### Key insight
+> The pipeline does not represent reality — it represents sampled snapshots filtered by data quality rules.
+
+#### What is still weak
+- Cannot distinguish missing vs real “no delay”  
+- No thresholds to evaluate data quality  
+- No alerts or validation rules  
+
+
+---
+
+### 🧱 Iteration 26 — Retries & Failure Types
+
+#### What I did
+- Added retries to Airflow DAG  
+- Simulated API failure  
+- Observed retry behavior in Airflow UI  
+
+#### What I learned (CORE)
+- Systems must handle temporary failures  
+- Not all failures are equal:  
+  - transient → retry works  
+  - permanent → retry fails  
+- Airflow can automatically retry tasks  
+- Retries improve system resilience  
+
+#### Key insight
+> A robust pipeline is not one that never fails, but one that can recover from temporary failures automatically.
+
+#### What is still weak
+- No alerting (failures are not visible outside logs)  
+- No retry strategy tuning  
+- No differentiation between error types  
+
+
+---
+
+### 🧱 Iteration 27 — Failure Observation & System Behavior
+
+#### What I did
+- Simulated different failure scenarios:  
+  - API failure  
+  - empty data  
+  - database failure  
+- Observed how the pipeline behaves in each case  
+
+#### What I learned (CORE)
+- Not all failures are equal  
+- Some failures are handled safely, others crash the system  
+- Observing failure reveals gaps in system design  
+
+#### Key insight
+> A system is not defined by whether it fails, but by how it handles failure.
+
+#### What is still weak
+- Some failures still cause uncontrolled behavior  
+- Lack of explicit failure handling logic  
+
+
+---
+
+### 🧱 Iteration 28 — Failure Handling & Logging
+
+#### What I did
+- Fixed DB connection handling to avoid crashes  
+- Differentiated API failure (`None`) vs empty data (`[]`)  
+- Improved logging to clearly explain pipeline behavior  
+- Tested failure scenarios and verified system behavior  
+
+#### What I learned (CORE)
+- A system should not crash randomly — it must stop intentionally  
+- Not all “no data” is the same (failure vs valid empty)  
+- Logs are essential to understand what the system is doing  
+- Handling failure explicitly makes the pipeline predictable  
+
+#### Key insight
+> A system is not reliable because it works, but because it behaves correctly when things go wrong.
+
+#### What is still weak
+- No data validation rules enforced yet  
+- No thresholds to reject bad data  
+- No alerting or monitoring system 

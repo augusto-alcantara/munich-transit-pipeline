@@ -18,7 +18,7 @@ def fetch_mvg_data():
 
         if response.status_code !=200:
             logging.error("MVG API request failed with status_code: %s", response.status_code)
-            return []
+            return None
         
         data = response.json()
 
@@ -30,8 +30,7 @@ def fetch_mvg_data():
 
     except requests.RequestException as e:
         logging.error("MVG API request failed due to network error: %s", e)
-
-        return []
+        return None
 
 if __name__ == "__main__":
     data = fetch_mvg_data()
