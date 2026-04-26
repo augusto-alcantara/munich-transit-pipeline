@@ -770,6 +770,12 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 - Failure classification makes debugging faster and decisions clearer  
 - Observability means understanding failures without reading code  
 
+### How I validated it
+- Explained the pipeline end-to-end, including failure handling and logging strategy  
+- Verified I can clearly distinguish retryable vs non-retryable failures  
+- Confirmed I can understand pipeline behavior using logs alone, without reading code  
+- Practiced explaining the system under interview-style questions
+
 ### Key insight
 > A pipeline should not only handle failures, but clearly communicate what they mean.
 
@@ -777,3 +783,39 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 - No alerting or monitoring  
 - Logs are not centralized  
 - Metrics are not aggregated  
+
+
+---
+
+## 🧱 Iteration 31 — Packaging & Interview Readiness  
+📅 2026-04-26
+
+### What I did
+- Cleaned the structure of the pipeline to make it easier to understand  
+- Improved how errors are handled (retryable vs non-retryable)  
+- Reviewed logs to better understand what happens in each stage  
+- Rewrote the README to explain the pipeline clearly  
+- Added a section about failure handling  
+- Added a section about limitations of the system  
+- Practiced explaining the pipeline step by step  
+
+### What I learned (CORE)
+- It’s not enough that the pipeline works, I need to be able to explain it clearly  
+- A clear structure makes the system easier to understand and maintain  
+- Correct error handling is important to make the pipeline reliable  
+- Logs help understand what is happening, even without reading the code  
+- Every system has limitations, and it’s important to recognize them   
+
+### Key insight
+> A good project is not only working, but also easy to understand.
+
+### How I validated it
+- I explained the pipeline in less than 90 seconds  
+- I checked that the README is clear  
+- I made sure I can explain my decisions  
+
+### What is still weak
+- Logs are only local  
+- No alerts when something fails  
+- The dataset is small  
+- Tables are created inside the pipeline  

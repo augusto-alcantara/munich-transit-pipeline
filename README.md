@@ -1,6 +1,6 @@
 # Munich Transit Pipeline
 
-A data engineering project that ingests real-time transit data from the Munich MVG API, stores raw JSON in PostgreSQL, and transforms it into a structured analytical table with basic data quality validation.
+A data engineering pipeline that ingests raw data from the MVG API, transforms it into a structured format, applies data quality validation, and loads it into a PostgreSQL database with built-in failure handling and observability.
 
 ---
 
@@ -64,6 +64,12 @@ The pipeline is orchestrated using Apache Airflow and is divided into two main t
   - Writes structured data into `transit_departures`
 
 Each task is independent and communicates through the database, rather than sharing data in memory.
+
+---
+
+## Failure Handling & Observability
+
+The pipeline classifies failures into retryable, non-retryable, and non-critical. Retryable errors, such as API or network failures, raise exceptions and are retried automatically by Airflow. Non-retryable errors, like failed data validation, stop the pipeline to protect data quality. Non-critical situations, such as empty data, are logged as warnings and handled safely. Structured logs clearly indicate the stage, type of failure, and system behavior, making debugging easier without reading the code.
 
 ---
 
@@ -346,12 +352,15 @@ Actively under development, with current focus on reliability, observability, te
 
 ---
 
-## Current Limitations
+## Limitations & Trade-offs
 
-- Runs on a local PostgreSQL instance (not deployed to cloud)
-- No retry or alerting configuration in Airflow yet
-- Processes data in batch without incremental optimization
-- No downstream consumption layer (e.g. dashboard or analytics service)
+- The pipeline currently processes only a small number of rows, which may hide issues that would appear with larger and more realistic datasets.
+
+- The pipeline currently creates tables during execution, which mixes setup with data processing. These concerns should be separated, with the pipeline focusing only on processing data.
+
+- The pipeline uses local logging, which is not centralized. This limits visibility, as logs are only available on the local machine and cannot be easily accessed or monitored by other systems.
+
+- The pipeline does not include alerting or monitoring, so failures must be checked manually instead of being automatically detected.
 
 ---
 

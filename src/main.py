@@ -36,7 +36,7 @@ def main():
 
         if data is None:
             logging.error("[INGESTION][RETRYABLE] API failure detected. Aborting pipeline.")
-            return
+            raise Exception("Retryable ingestion failure")
         
         if not data:
             logging.warning("[INGESTION][NON-CRITICAL] No data returned from API. Pipeline will stop.")
@@ -60,7 +60,7 @@ def main():
 
         rows = transform_departures(data, ingested_at)
 
-        valid_ratio = len(rows) / len(data) 
+        valid_ratio = len(rows) / len(data) if data else 0
 
         logging.info(
             "[QUALITY] Valid rows ratio: %.2f (valid=%d / total=%d)",
