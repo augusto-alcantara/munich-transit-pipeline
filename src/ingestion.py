@@ -17,7 +17,10 @@ def fetch_mvg_data():
         response = requests.get(url, params=params, timeout=10)
 
         if response.status_code !=200:
-            logging.error("MVG API request failed with status_code: %s", response.status_code)
+            logging.error(
+                "[INGESTION][RETRYABLE] API returned status_code: %s", 
+                response.status_code
+            )
             return None
         
         data = response.json()
@@ -29,7 +32,7 @@ def fetch_mvg_data():
         return departures
 
     except requests.RequestException as e:
-        logging.error("MVG API request failed due to network error: %s", e)
+        logging.error("[INGESTION][RETRYABLE] API request failed: %s", e)
         return None
 
 if __name__ == "__main__":

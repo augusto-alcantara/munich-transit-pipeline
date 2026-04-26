@@ -33,13 +33,13 @@ def main():
     try:
         logging.info("[INGESTION] Fetching data from MVG API...")
         data = fetch_mvg_data()
-        
+
         if data is None:
-            logging.error("[INGESTION] API failure detected. Aborting pipeline.")
+            logging.error("[INGESTION][RETRYABLE] API failure detected. Aborting pipeline.")
             return
         
         if not data:
-            logging.warning("[INGESTION] No data returned from API. Pipeline will stop (no rows to process).")
+            logging.warning("[INGESTION][NON-CRITICAL] No data returned from API. Pipeline will stop.")
             return
         
         logging.info("[INGESTION] Fetched %d raw records", len(data))
@@ -62,10 +62,19 @@ def main():
 
         valid_ratio = len(rows) / len(data) 
 
-        logging.info("[QUALITY] Valid rows ratio: %.2f", valid_ratio)
+        logging.info(
+            "[QUALITY] Valid rows ratio: %.2f (valid=%d / total=%d)",
+            valid_ratio,
+            len(rows),
+            len(data)
+        )
 
-        if valid_ratio < 0.5:
-            logging.warning("[QUALITY] Low valid data ratio detected (%.2f). Data may be unreliable.", valid_ratio)
+        if len(data) >=20 and valid_ratio < 0.5:
+            logging.error(
+                "[VALIDATION][NON-RETRYABLE] Valid ratio too low (%.2f). Aborting pipeline.",
+                valid_ratio
+            )
+            return
 
         end = time.time()
         logging.info("[TRANSFORMATION] Transformed %d rows in %.2f seconds", len(rows), end - start)

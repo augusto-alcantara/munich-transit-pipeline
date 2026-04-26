@@ -31,11 +31,12 @@ Iterations represent learning cycles and system improvements, not calendar days.
 - [2026-04-14 — Iteration 21 — Pipeline Consistency & SQL Structuring](#iteration-21--pipeline-consistency--sql-structuring)
 - [2026-04-15 — Iteration 22 — Insert Optimization (Scalability)](#iteration-22--insert-optimization-scalability)
 - [2026-04-15 — Iteration 23 — Logging & Observability](#iteration-23--logging--observability)
-- [2026-04-17/19 — Iteration 24 — Airflow Integration & System Thinking](#iteration-24--airflow-integration--system-thinking)
-- [2026-04-20/21 — Iteration 25 — Data Exploration & SQL Understanding](#iteration-25--data-exploration--sql-understanding)
-- [2026-04-20/21 — Iteration 26 — Retries & Failure Types](#iteration-26--retries--failure-types)
-- [2026-04-20/21 — Iteration 27 — Failure Observation & System Behavior](#iteration-27--failure-observation--system-behavior)
-- [2026-04-20/21 — Iteration 28 — Failure Handling & Logging](#iteration-28--failure-handling--logging)
+- [2026-04-17 — Iteration 24 — Airflow Integration & System Thinking](#iteration-24--airflow-integration--system-thinking)
+- [2026-04-20 — Iteration 25 — Data Exploration & SQL Understanding](#iteration-25--data-exploration--sql-understanding)
+- [2026-04-22 — Iteration 26 — Retries & Failure Types](#iteration-26--retries--failure-types)
+- [2026-04-22 — Iteration 27 — Failure Observation & System Behavior](#iteration-27--failure-observation--system-behavior)
+- [2026-04-23 — Iteration 28 — Failure Handling & Logging](#iteration-28--failure-handling--logging)
+- [2026-04-24 — Iteration 29 — Data Validation Gate (Batch-Level Quality Control)](#iteration-29--data-validation-gate-batch-level-quality-control)
 
 ---
 
@@ -620,6 +621,7 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 ---
 
 ### 🧱 Iteration 25 — Data Exploration & SQL Understanding
+## 📅 2026-04-22
 
 #### What I did
 - Ran pipeline and verified execution  
@@ -646,6 +648,7 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 ---
 
 ### 🧱 Iteration 26 — Retries & Failure Types
+## 📅 2026-04-22
 
 #### What I did
 - Added retries to Airflow DAG  
@@ -672,6 +675,7 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 ---
 
 ### 🧱 Iteration 27 — Failure Observation & System Behavior
+## 📅 2026-04-22
 
 #### What I did
 - Simulated different failure scenarios:  
@@ -696,6 +700,7 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 ---
 
 ### 🧱 Iteration 28 — Failure Handling & Logging
+## 📅 2026-04-23
 
 #### What I did
 - Fixed DB connection handling to avoid crashes  
@@ -716,3 +721,59 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 - No data validation rules enforced yet  
 - No thresholds to reject bad data  
 - No alerting or monitoring system 
+
+
+---
+
+## 🧱 Iteration 29 — Data Validation Gate (Batch-Level Quality Control)
+## 📅 2026-04-24 / 2026-04-25
+
+### What I did
+- Added batch-level validation using `valid_ratio = len(rows) / len(data)`
+- Implemented rule: stop pipeline if `valid_ratio < 0.5`
+- Ensured pipeline aborts before commit when validation fails
+- Logged validation metrics and failure reason
+- Tested behavior by simulating low-quality data scenarios
+
+### What I learned (CORE)
+- Cleaning individual rows is not enough — the overall dataset can still be unreliable
+- Data quality must be enforced at both **row level (quality rules)** and **batch level (validation)**
+- A pipeline should decide whether to accept or reject data before storing it
+- Validation thresholds are heuristics and may not fit all situations
+
+### Key insight
+> A reliable pipeline is not one that processes data, but one that enforces whether the data is acceptable before writing it.
+
+### What is still weak
+- Validation threshold (0.5) is fixed and not context-aware
+- Small datasets may trigger false negatives (e.g., few rows)
+- No differentiation yet between types of validation failure in logs
+- No alerting or monitoring when validation fails
+
+
+---
+
+# 🧱 Iteration 30 — Observability & Failure Classification  
+## 📅 2026-04-25
+
+### What I did
+- Added structured logs with stage labels (`INGESTION`, `TRANSFORMATION`, `VALIDATION`)
+- Classified failures as `RETRYABLE`, `NON-RETRYABLE`, and `NON-CRITICAL`
+- Aligned behavior:
+  - retryable → Airflow retries  
+  - non-retryable → pipeline stops  
+  - non-critical → pipeline continues  
+- Updated transformation logs to track data issues
+
+### What I learned (CORE)
+- Logs should explain system behavior, not just report errors  
+- Failure classification makes debugging faster and decisions clearer  
+- Observability means understanding failures without reading code  
+
+### Key insight
+> A pipeline should not only handle failures, but clearly communicate what they mean.
+
+### What is still weak
+- No alerting or monitoring  
+- Logs are not centralized  
+- Metrics are not aggregated  
