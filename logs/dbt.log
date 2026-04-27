@@ -1,0 +1,90 @@
+[0m15:53:58.404206 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74477e9baa80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74477e9ba4e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74477e899eb0>]}
+
+
+============================== 15:53:58.434190 | 64456f27-dd0d-4f5a-9894-51f86eb00b86 ==============================
+[0m15:53:58.434190 [info ] [MainThread]: Running with dbt=1.11.8
+[0m15:53:58.438095 [debug] [MainThread]: running dbt with arguments {'invocation_command': 'dbt init transit_dbt', 'use_colors': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'version_check': 'True', 'log_path': 'logs', 'target_path': 'None', 'log_format': 'default', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'profiles_dir': '/home/gabri/.dbt', 'partial_parse': 'True', 'empty': 'None', 'write_json': 'True', 'printer_width': '80', 'no_print': 'None', 'indirect_selection': 'eager', 'warn_error': 'None', 'send_anonymous_usage_stats': 'True', 'log_cache_events': 'False', 'static_parser': 'True', 'debug': 'False', 'quiet': 'False', 'use_experimental_parser': 'False'}
+[0m15:53:58.529758 [info ] [MainThread]: Creating dbt configuration folder at /home/gabri/.dbt
+[0m15:53:58.538531 [debug] [MainThread]: Starter project path: /home/gabri/munich-transit-pipeline/venv/lib/python3.12/site-packages/dbt/include/starter_project
+[0m15:53:58.571691 [info ] [MainThread]: 
+Your new dbt project "transit_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m15:53:58.579093 [info ] [MainThread]: Setting up your profile.
+[0m16:02:51.349422 [info ] [MainThread]: Profile transit_dbt written to /home/gabri/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m16:02:51.361753 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 548.05475, "process_in_blocks": "43856", "process_kernel_time": 1.96942, "process_mem_max_rss": "108368", "process_out_blocks": "80", "process_user_time": 10.122393}
+[0m16:02:51.365827 [debug] [MainThread]: Command `dbt init` succeeded at 16:02:51.364997 after 548.06 seconds
+[0m16:02:51.368368 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74477e9baa80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74477e9955b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74477d969cd0>]}
+[0m16:02:51.371069 [debug] [MainThread]: Flushing usage events
+[0m16:02:52.490819 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m16:03:34.910639 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7830a01b9e20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78309f419580>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78309fee6d20>]}
+
+
+============================== 16:03:34.947195 | 8aa2eead-dab3-4788-b115-b929c81f4af2 ==============================
+[0m16:03:34.947195 [info ] [MainThread]: Running with dbt=1.11.8
+[0m16:03:34.951373 [debug] [MainThread]: running dbt with arguments {'target_path': 'None', 'empty': 'None', 'log_path': 'logs', 'fail_fast': 'False', 'profiles_dir': '/home/gabri/.dbt', 'log_cache_events': 'False', 'quiet': 'False', 'static_parser': 'True', 'use_colors': 'True', 'cache_selected_only': 'False', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'no_print': 'None', 'version_check': 'True', 'partial_parse': 'True', 'write_json': 'True', 'warn_error': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'introspect': 'True', 'log_format': 'default', 'printer_width': '80', 'invocation_command': 'dbt debug', 'debug': 'False', 'send_anonymous_usage_stats': 'True'}
+[0m16:03:35.021072 [info ] [MainThread]: dbt version: 1.11.8
+[0m16:03:35.023725 [info ] [MainThread]: python version: 3.12.3
+[0m16:03:35.034766 [info ] [MainThread]: python path: /home/gabri/munich-transit-pipeline/venv/bin/python3
+[0m16:03:35.037360 [info ] [MainThread]: os info: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39
+[0m16:03:35.422826 [info ] [MainThread]: Using profiles dir at /home/gabri/.dbt
+[0m16:03:35.431195 [info ] [MainThread]: Using profiles.yml file at /home/gabri/.dbt/profiles.yml
+[0m16:03:35.436951 [info ] [MainThread]: Using dbt_project.yml file at /home/gabri/munich-transit-pipeline/dbt_project.yml
+[0m16:03:35.442713 [info ] [MainThread]: adapter type: postgres
+[0m16:03:35.452654 [info ] [MainThread]: adapter version: 1.10.0
+[0m16:03:35.456989 [info ] [MainThread]: Configuration:
+[0m16:03:35.460912 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m16:03:35.463937 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m16:03:35.475961 [info ] [MainThread]: Required dependencies:
+[0m16:03:35.478987 [debug] [MainThread]: Executing "git --help"
+[0m16:03:35.497846 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--config-env=<name>=<envvar>] <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m16:03:35.501148 [debug] [MainThread]: STDERR: "b''"
+[0m16:03:35.503948 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m16:03:35.512567 [info ] [MainThread]: Connection:
+[0m16:03:35.516578 [info ] [MainThread]:   host: 172.26.48.1
+[0m16:03:35.519613 [info ] [MainThread]:   port: 5432
+[0m16:03:35.522671 [info ] [MainThread]:   user: postgres
+[0m16:03:35.534001 [info ] [MainThread]:   database: de_project
+[0m16:03:35.537343 [info ] [MainThread]:   schema: public
+[0m16:03:35.540775 [info ] [MainThread]:   connect_timeout: 10
+[0m16:03:35.553128 [info ] [MainThread]:   role: None
+[0m16:03:35.557518 [info ] [MainThread]:   search_path: None
+[0m16:03:35.561181 [info ] [MainThread]:   keepalives_idle: 0
+[0m16:03:35.564759 [info ] [MainThread]:   sslmode: None
+[0m16:03:35.577748 [info ] [MainThread]:   sslcert: None
+[0m16:03:35.581260 [info ] [MainThread]:   sslkey: None
+[0m16:03:35.584430 [info ] [MainThread]:   sslrootcert: None
+[0m16:03:35.597844 [info ] [MainThread]:   application_name: dbt
+[0m16:03:35.600892 [info ] [MainThread]:   retries: 1
+[0m16:03:35.604733 [info ] [MainThread]: Registered adapter: postgres=1.10.0
+[0m16:03:36.845892 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m16:03:37.659748 [debug] [MainThread]: Using postgres connection "debug"
+[0m16:03:37.662413 [debug] [MainThread]: On debug: select 1 as id
+[0m16:03:37.664739 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m16:03:41.777790 [debug] [MainThread]: SQL status: SELECT 1 in 4.113 seconds
+[0m16:03:41.784321 [debug] [MainThread]: On debug: Close
+[0m16:03:41.788762 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m16:03:41.795807 [info ] [MainThread]: [31m1 check failed:[0m
+[0m16:03:41.799457 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </home/gabri/munich-transit-pipeline/dbt_project.yml> not found
+
+[0m16:03:41.815797 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 7.815879, "process_in_blocks": "7616", "process_kernel_time": 1.920648, "process_mem_max_rss": "117420", "process_out_blocks": "32", "process_user_time": 11.699233}
+[0m16:03:41.819889 [debug] [MainThread]: Command `dbt debug` failed at 16:03:41.819000 after 7.83 seconds
+[0m16:03:41.823024 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m16:03:41.835780 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78309fec44d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78309fee6d20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78309ef0ef00>]}
+[0m16:03:41.849562 [debug] [MainThread]: Flushing usage events
+[0m16:03:42.792069 [debug] [MainThread]: An error was encountered while trying to flush usage events

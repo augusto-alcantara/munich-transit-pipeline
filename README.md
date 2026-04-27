@@ -6,14 +6,13 @@ A data engineering pipeline that ingests raw data from the MVG API, transforms i
 
 ## Overview
 
-This project demonstrates a basic data engineering pipeline design, including ingestion, raw storage, transformation, and analytical modeling using PostgreSQL.
+This project demonstrates a basic data engineering pipeline design, including ingestion, raw storage, transformation, and analytical modeling using SQL and dbt.
 The focus is not just moving data, but designing a small pipeline that is queryable, testable, and more reliable under imperfect real-world input.
 
 ---
 
 ## Key Features
 
-- Orchestrated pipeline using Apache Airflow
 - Separation of ingestion and transformation tasks
 - Idempotent data loading using UNIQUE constraints and conflict handling
 - Transaction management with commit / rollback
@@ -39,20 +38,50 @@ The focus is not just moving data, but designing a small pipeline that is querya
 ## Pipeline Architecture
 
 ```text
-Scheduled and orchestrated by Airflow
-Airflow DAG
+Pipeline execution (Python)
 
-ingestion_task:
-    MVG API → raw_transit_data (PostgreSQL)
-
-transformation_task:
-    raw_transit_data → transform → transit_departures
+MVG API → ingestion → raw_transit_data (PostgreSQL)
+                ↓
+         transformation
+                ↓
+        transit_departures
 ```
+
+---
+
+## Data Modeling with dbt
+
+A lightweight dbt layer was introduced to separate analytical modeling from ingestion and transformation logic.
+
+While the Python pipeline handles data ingestion, raw storage, and initial structuring, dbt is used to define clean, analytics-ready models directly in SQL.
+
+---
+
+### Updated Architecture
+
+```text
+API → Python → PostgreSQL (transit_departures)
+                         ↓
+                        dbt
+                         ↓
+              clean_transit_departures
+```
+
+---
+
+### Purpose
+
+- separates data processing from analytical modeling
+- enables SQL-based transformations for analytics
+- improves clarity and maintainability of the data layer
+
+This reflects a more realistic data engineering pattern where ingestion and modeling are handled in distinct layers.
+
 ---
 
 ## Architecture
 
-The pipeline is orchestrated using Apache Airflow and is divided into two main tasks:
+The pipeline is executed through a Python entry point (`main.py`) and is divided into two main stages:
 
 - **Ingestion task**
   - Fetches data from the MVG API
@@ -69,7 +98,7 @@ Each task is independent and communicates through the database, rather than shar
 
 ## Failure Handling & Observability
 
-The pipeline classifies failures into retryable, non-retryable, and non-critical. Retryable errors, such as API or network failures, raise exceptions and are retried automatically by Airflow. Non-retryable errors, like failed data validation, stop the pipeline to protect data quality. Non-critical situations, such as empty data, are logged as warnings and handled safely. Structured logs clearly indicate the stage, type of failure, and system behavior, making debugging easier without reading the code.
+The pipeline classifies failures into retryable, non-retryable, and non-critical. Retryable errors, such as API or network failures, raise exceptions and are treated as retryable and can be retried in a production orchestrator. Non-retryable errors, like failed data validation, stop the pipeline to protect data quality. Non-critical situations, such as empty data, are logged as warnings and handled safely. Structured logs clearly indicate the stage, type of failure, and system behavior, making debugging easier without reading the code.
 
 ---
 
@@ -172,7 +201,6 @@ python -m pytest -v
 - psycopg2
 - requests
 - DBeaver / psql for database inspection
-- Apache Airflow
 
 ---
 
@@ -367,7 +395,7 @@ Actively under development, with current focus on reliability, observability, te
 
 ## Future Improvements
 
-- Improve Airflow configuration (retries, scheduling, monitoring)
+- Introduce a workflow orchestrator (e.g., Airflow) for scheduling, retries, and monitoring
 - Deploy pipeline to cloud environment (AWS)
 - Expand automated test coverage beyond transformation logic
 - Handle schema evolution if API changes

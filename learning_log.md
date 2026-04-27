@@ -37,6 +37,8 @@ Iterations represent learning cycles and system improvements, not calendar days.
 - [2026-04-22 — Iteration 27 — Failure Observation & System Behavior](#iteration-27--failure-observation--system-behavior)
 - [2026-04-23 — Iteration 28 — Failure Handling & Logging](#iteration-28--failure-handling--logging)
 - [2026-04-24 — Iteration 29 — Data Validation Gate (Batch-Level Quality Control)](#iteration-29--data-validation-gate-batch-level-quality-control)
+- [2026-04-25 — Iteration 30 — Observability & Failure Classification](#iteration-30--observability--failure-classification)
+- [2026-04-26 — Iteration 31 — Packaging & Explainability (Interview Readiness)](#iteration-31--packaging--explainability-interview-readiness)
 
 ---
 
