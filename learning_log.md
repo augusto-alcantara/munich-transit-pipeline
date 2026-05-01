@@ -39,6 +39,7 @@ Iterations represent learning cycles and system improvements, not calendar days.
 - [2026-04-24 — Iteration 29 — Data Validation Gate (Batch-Level Quality Control)](#iteration-29--data-validation-gate-batch-level-quality-control)
 - [2026-04-25 — Iteration 30 — Observability & Failure Classification](#iteration-30--observability--failure-classification)
 - [2026-04-26 — Iteration 31 — Packaging & Explainability (Interview Readiness)](#iteration-31--packaging--explainability-interview-readiness)
+- [2026-04-26 — Iteration 32 — dbt Modeling Layer (Analytical Separation)](#iteration-32--dbt-modeling-layer-analytical-separation)
 
 ---
 
@@ -821,3 +822,51 @@ Explaining queries clearly is harder than writing them, but it exposes real unde
 - No alerts when something fails  
 - The dataset is small  
 - Tables are created inside the pipeline  
+
+
+---
+
+## 🧱 Iteration 32 — dbt Modeling Layer  
+📅 2026-04-26 
+
+---
+
+### What I did
+- Installed and configured dbt with PostgreSQL  
+- Created a dbt project (`transit_dbt`)  
+- Connected dbt to the existing database  
+- Created first model: `clean_transit_departures`  
+- Ran dbt successfully and verified the new table  
+- Removed default example models and cleaned configuration  
+- Updated README to include dbt and the new architecture  
+
+---
+
+### What I learned (CORE)
+- dbt is not a database, it is a transformation layer using SQL  
+- Python and dbt have different roles:
+  - Python → ingestion and data processing  
+  - dbt → analytical modeling  
+- A SQL file in dbt represents a model that creates a new table/view  
+- Layering the system makes it clearer and closer to real-world architectures  
+
+---
+
+### Key insight
+> Separating data processing from analytical modeling improves clarity and system design.
+
+---
+
+### How I validated it
+- I ran `dbt debug` successfully (connection works)  
+- I executed `dbt run` and created `clean_transit_departures`  
+- I verified the new table exists in PostgreSQL  
+- I explained the role of dbt in the pipeline  
+
+---
+
+### What is still weak
+- Only one dbt model (very basic)  
+- No dbt tests or documentation  
+- No orchestration (pipeline still manual)  
+- Limited analytical transformations  

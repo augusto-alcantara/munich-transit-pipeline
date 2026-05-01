@@ -71,7 +71,7 @@ API → Python → PostgreSQL (transit_departures)
 
 ### Purpose
 
-- separates data processing from analytical modeling
+- Separates data processing from analytical modeling
 - enables SQL-based transformations for analytics
 - improves clarity and maintainability of the data layer
 
@@ -81,7 +81,9 @@ This reflects a more realistic data engineering pattern where ingestion and mode
 
 ## Architecture
 
-The pipeline is executed through a Python entry point (`main.py`) and is divided into two main stages:
+The pipeline can be executed manually via a Python entry point (`main.py`) or orchestrated through Airflow for scheduled and reliable execution.
+
+It is divided into two main stages:
 
 - **Ingestion task**
   - Fetches data from the MVG API
@@ -93,6 +95,35 @@ The pipeline is executed through a Python entry point (`main.py`) and is divided
   - Writes structured data into `transit_departures`
 
 Each task is independent and communicates through the database, rather than sharing data in memory.
+
+---
+
+## Orchestration (Airflow)
+
+The pipeline can be executed manually via `main.py` or orchestrated using Airflow for scheduled and reliable execution.
+
+Airflow manages the pipeline as a Directed Acyclic Graph (DAG) with two main tasks:
+
+- **ingestion** → fetches and stores raw data  
+- **transformation** → processes and loads structured data  
+
+This introduces a production-like execution model where:
+
+- task dependencies are explicitly defined  
+- failures can be retried automatically  
+- logs are available per task through the Airflow UI  
+
+### End-to-End Flow
+
+```text
+Airflow DAG
+   ↓
+Python ingestion → raw_transit_data (PostgreSQL)
+   ↓
+Python transformation → transit_departures
+   ↓
+dbt → clean_transit_departures
+```
 
 ---
 
@@ -112,6 +143,19 @@ The pipeline stores both raw and structured data:
 - `transit_departures` provides a clean analytical model optimized for SQL queries
 
 This separation reflects a common data engineering pattern: ingest first, model later.
+
+---
+
+## Trade-offs
+
+- **Python vs dbt**  
+  Python handles ingestion and initial transformation, while dbt is used for analytical modeling. This separation improves clarity and maintainability but introduces an additional layer to manage.
+
+- **Append vs overwrite**  
+  The pipeline uses append-based loading to preserve historical snapshots, at the cost of increased storage usage.
+
+- **Local setup vs cloud**  
+  The pipeline runs locally for simplicity, but lacks scalability, centralized logging, and production-level monitoring.
 
 ---
 
@@ -395,7 +439,7 @@ Actively under development, with current focus on reliability, observability, te
 
 ## Future Improvements
 
-- Introduce a workflow orchestrator (e.g., Airflow) for scheduling, retries, and monitoring
+- Improve Airflow DAG with more advanced scheduling, monitoring, and alerting
 - Deploy pipeline to cloud environment (AWS)
 - Expand automated test coverage beyond transformation logic
 - Handle schema evolution if API changes
