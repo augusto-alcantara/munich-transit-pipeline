@@ -343,6 +343,33 @@ These analyses demonstrate how the pipeline output can be used for monitoring, r
 
 ---
 
+## Example Analysis: Average Delay per Line
+
+To evaluate system reliability, we computed the average delay per transit line.
+
+```sql
+SELECT line,
+       AVG(delay_minutes) AS avg_delay
+FROM transit_departures
+WHERE delay_minutes IS NOT NULL
+GROUP BY line
+ORDER BY avg_delay DESC;
+```
+
+---
+
+### Result & Interpretation
+
+In one run of the pipeline, Line 18 showed a significantly higher average delay (~13 minutes) compared to the rest.
+
+Most lines had average delays close to or below 1 minute, with only a few reaching around 5 minutes.
+
+This suggests that delays are generally low, but there can be outliers depending on the specific snapshot of the data.
+
+Note: The dataset is based on snapshots, so results can vary. The goal is to demonstrate how to analyze and interpret the data, not to make fixed claims.
+
+---
+
 ## Data Quality Rules
 
 The transformation layer enforces the following rules:
